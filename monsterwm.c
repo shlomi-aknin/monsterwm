@@ -93,6 +93,7 @@ static void quit(const Arg *arg);
 static void resize_master(const Arg *arg);
 static void resize_stack(const Arg *arg);
 static void rotate(const Arg *arg);
+static void rotate_client(const Arg *arg);
 static void rotate_filled(const Arg *arg);
 static void spawn(const Arg *arg);
 static void swap_master();
@@ -971,6 +972,16 @@ void resize_stack(const Arg *arg) {
  */
 void rotate(const Arg *arg) {
     change_desktop(&(Arg){.i = (DESKTOPS + currdeskidx + arg->i) % DESKTOPS});
+}
+
+/* jump and focus the next or previous desktop
+ * and take the current client with us. */
+void rotate_client(const Arg *arg)
+{
+    int i = (DESKTOPS + currdeskidx + arg->i) % DESKTOPS;
+
+    client_to_desktop(&(Arg){.i = i});
+    change_desktop(&(Arg){.i = i});
 }
 
 /**
