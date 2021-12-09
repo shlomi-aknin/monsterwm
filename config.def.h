@@ -94,6 +94,8 @@ static Key keys[] = {
     {  SUPER|CONTROL|ALT, XK_u,          resize_master,     {.i = +10}}, /* increase size in px */
     {  SUPER|CONTROL|ALT, XK_y,          resize_master,     {.i = -10}}, /* decrease size in px */
 
+    {  SUPER|SHIFT,       XK_F1,         spawn,             SHCMD("sudo reboot") },
+    {  SUPER|SHIFT,       XK_F2,         spawn,             SHCMD("sudo poweroff") },
     {  SUPER|SHIFT,       XK_h,          rotate_client,     {.i = -1}},
     {  SUPER|SHIFT,       XK_j,          move_down,         {NULL}},
     {  SUPER|SHIFT,       XK_k,          move_up,           {NULL}},
