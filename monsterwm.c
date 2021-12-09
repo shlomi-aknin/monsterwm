@@ -81,7 +81,8 @@ typedef struct {
 static void change_desktop(const Arg *arg);
 static void client_to_desktop(const Arg *arg);
 static void focusurgent();
-static void killclient();
+static void killclient(const Arg *arg);
+static void killall();
 static void last_desktop();
 static void move_down();
 static void move_up();
@@ -667,16 +668,27 @@ void keypress(XEvent *e) {
  * if the client accepts WM_DELETE_WINDOW requests send a delete message
  * otherwise forcefully kill and remove the client
  */
-void killclient(void) {
+void killclient(const Arg *arg) {
     Desktop *d = &desktops[currdeskidx];
-    if (!d->curr) return;
+    Client *c = arg->v ? arg->v : d->curr;
+    if (!c) return;
 
     Atom *prot = NULL; int n = -1;
-    if (XGetWMProtocols(dis, d->curr->win, &prot, &n))
+    if (XGetWMProtocols(dis, c->win, &prot, &n))
         while(--n >= 0 && prot[n] != wmatoms[WM_DELETE_WINDOW]);
-    if (n < 0) { XKillClient(dis, d->curr->win); removeclient(d->curr, d); }
-    else deletewindow(d->curr->win);
+    if (n < 0) { XKillClient(dis, c->win); removeclient(c, d); }
+    else deletewindow(c->win);
     if (prot) XFree(prot);
+}
+
+/**
+ * kill all clients on desktop
+ */
+void killall(void) {
+    Desktop *d = &desktops[currdeskidx];
+    for (Client *c = d->head; c; c = c->next) {
+        killclient(&(Arg){.v = c});
+    }
 }
 
 /**

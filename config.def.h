@@ -104,6 +104,7 @@ static Key keys[] = {
     {  SUPER|SHIFT,       XK_p,          spawn,             SHCMD("clipmenu") },
     {  SUPER|SHIFT,       XK_q,          quit,              {.i = 0}}, /* quit with exit value 0 */
     {  SUPER|SHIFT,       XK_r,          quit,              {.i = 1}}, /* quit with exit value 1 */
+    {  SUPER|SHIFT,       XK_x,          killall,           {NULL}}, /* kill all clients on desktop */
 
        DESKTOPCHANGE(     XK_1,                             0)
        DESKTOPCHANGE(     XK_2,                             1)
