@@ -36,7 +36,6 @@ static const AppRule rules[] = { \
     /*  class     desktop  follow  float */
     { "MPlayer",     3,    True,   False },
     { "ttyclock",    -1,   True,   True  },
-    /* { "Gimp",        0,    False,  True  }, */
 };
 
 /* helper for spawning shell commands */
@@ -70,9 +69,10 @@ static Key keys[] = {
     {  SUPER,             XK_j,          next_win,          {NULL}},
     {  SUPER,             XK_k,          prev_win,          {NULL}},
     {  SUPER,             XK_l,          rotate_filled,     {.i = +1}},
-    {  SUPER,             XK_m,          switch_mode,       {.i = MONOCLE}},
+    {  SUPER,             XK_m,          togglemonocle,     {NULL}},
     {  SUPER,             XK_n,          spawn,             SHCMD("alacritty -e nvim")},
     {  SUPER,             XK_o,          spawn,             SHCMD("alacritty -e htop")},
+    {  SUPER,             XK_p,          spawn,             SHCMD("clipmenu && xdotool key shift+Insert") },
     {  SUPER,             XK_r,          spawn,             {.com = menucmd}},
     {  SUPER,             XK_t,          switch_mode,       {.i = TILE}},
     {  SUPER,             XK_u,          rotate,            {.i = -1}},
@@ -99,6 +99,7 @@ static Key keys[] = {
     {  SUPER|SHIFT,       XK_k,          move_up,           {NULL}},
     {  SUPER|SHIFT,       XK_l,          rotate_client,     {.i = +1}},
     {  SUPER|SHIFT,       XK_m,          swap_master,       {NULL}},
+    {  SUPER|SHIFT,       XK_p,          spawn,             SHCMD("clipmenu") },
     {  SUPER|SHIFT,       XK_q,          quit,              {.i = 1}}, /* quit with exit value 1 */
     {  SUPER|SHIFT,       XK_r,          quit,              {.i = 0}}, /* quit with exit value 0 */
 

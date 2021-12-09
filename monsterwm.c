@@ -98,6 +98,7 @@ static void rotate_filled(const Arg *arg);
 static void spawn(const Arg *arg);
 static void swap_master();
 static void switch_mode(const Arg *arg);
+static void togglemonocle();
 static void togglepanel();
 
 #include "config.h"
@@ -186,7 +187,7 @@ static int xerrorstart(Display *dis, XErrorEvent *ee);
  * currdeskidx  - which desktop is currently active
  */
 static Bool running = True;
-static int wh, ww, currdeskidx, prevdeskidx, retval;
+static int wh, ww, currdeskidx, prevdeskidx, retval, lastmode = TILE;
 static unsigned int numlockmask, win_unfocus, win_focus;
 static Display *dis;
 static Window root;
@@ -1195,6 +1196,16 @@ void tile(Desktop *d) {
     if (!d->head || d->mode == FLOAT) return; /* nothing to arange */
     layout[d->head->next ? d->mode:MONOCLE](0, TOP_PANEL && d->sbar ? PANEL_HEIGHT:0,
                                                   ww, wh + (d->sbar ? 0:PANEL_HEIGHT), d);
+}
+
+/**
+ * toggle monocle mode
+ */
+void togglemonocle(void) {
+    Desktop *d = &desktops[currdeskidx];
+    if (d->mode != MONOCLE) lastmode = d->mode;
+
+    switch_mode(&(Arg){.i = d->mode == MONOCLE ? lastmode : MONOCLE});
 }
 
 /**
