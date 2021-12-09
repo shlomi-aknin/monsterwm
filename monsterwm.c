@@ -187,7 +187,7 @@ static int xerrorstart(Display *dis, XErrorEvent *ee);
  * currdeskidx  - which desktop is currently active
  */
 static Bool running = True;
-static int wh, ww, currdeskidx, prevdeskidx, retval, lastmode = TILE;
+static int wh, ww, currdeskidx, prevdeskidx, retval, lastmode = TILE, restart = 0;
 static unsigned int numlockmask, win_unfocus, win_focus;
 static Display *dis;
 static Window root;
@@ -928,6 +928,7 @@ void propertynotify(XEvent *e) {
  * run is stopped and control is back to main
  */
 void quit(const Arg *arg) {
+	if (arg->i) restart = 1;
     retval = arg->i;
     running = False;
 }
@@ -1267,6 +1268,7 @@ int main(int argc, char *argv[]) {
     desktopinfo(); /* zero out every desktop on (re)start */
     run();
     cleanup();
+	if (restart) execvp(argv[0], argv);
     XCloseDisplay(dis);
     return retval;
 }
