@@ -1,4 +1,4 @@
-# Makefile for monsterwm - see LICENSE for license and copyright information
+# Makefile for monsterwm - see LICENSE for license and copyright information.
 
 VERSION = cookies-git
 WMNAME  = monsterwm
